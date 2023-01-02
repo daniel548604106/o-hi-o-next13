@@ -1,0 +1,81 @@
+@import url('https://fonts.googleapis.com/css2?family=Crimson+Text:wght@400;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Abril+Fatface&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600&display=swap');
+:root {
+  --primary-black: #252628;
+  --primary-gray: #929292;
+  --border-gray: #eeeeef;
+  --icon-gray: #dbd9d9;
+  --secondary-gray: #f8f9fb;
+  --primary-pink: #eb7f82;
+  --title-font: 'Abril Fatface', cursive;
+  --primary-font: 'Lato', sans-serif;
+  --secondary-font: 'Crimson Text', serif;
+  --screen-lg: 1200px;
+  --screen-md: 720px;
+  --screen-sm: 420px;
+}
+
+hr {
+  border: 0.1px solid rgb(246, 246, 246);
+  background-color: rgb(246, 246, 246);
+}
+
+button,
+input,
+select,
+textarea {
+  outline: none;
+}
+
+button {
+  cursor: pointer;
+}
+
+.notification {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 11;
+}
+
+a {
+  cursor: pointer;
+  text-decoration: none;
+  color: black;
+}
+
+.global-container {
+  width: 100%;
+  margin: 0 auto;
+  max-width: 1200px;
+  @media (max-width: 500px) {
+    padding: 15px 15px;
+  }
+  padding: 30px 15px;
+}
+
+body {
+  font-family: 'Montserrat', sans-serif;
+  * {
+    &::-webkit-scrollbar {
+      width: 0;
+    }
+
+    &::-webkit-scrollbar-track {
+      border-radius: 10px;
+      width: 0;
+      height: 0;
+    }
+
+    &::-webkit-scrollbar-thumb {
+      border-radius: 10px;
+      width: 0;
+      height: 1px;
+    }
+  }
+}
+
+li {
+  list-style: none;
+}
