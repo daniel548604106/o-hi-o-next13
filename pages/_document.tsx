@@ -6,7 +6,10 @@ export default function Document() {
       <Head>
         <meta name="application-name" content="O.HI.O Official" />
         <meta name="apple-mobile-web-app-capable" content="yes" />
-        <meta name="apple-mobile-web-app-status-bar-style" content="default" />
+        <meta
+          name="apple-mobile-web-app-status-bar-style"
+          content="black-translucent"
+        />
         <meta name="apple-mobile-web-app-title" content="O.HI.O Official" />
         <meta
           name="description"
@@ -17,7 +20,7 @@ export default function Document() {
         {/* <meta name="msapplication-config" content="/icons/browserconfig.xml" /> */}
         <meta name="msapplication-TileColor" content="#2B5797" />
         <meta name="msapplication-tap-highlight" content="no" />
-        <meta name="theme-color" content="#000000" />
+        <meta name="theme-color" content="#fffff" />
 
         <link rel="apple-touch-icon" href="/icons/maskable_icon.png" />
         <link
