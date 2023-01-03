@@ -17,6 +17,9 @@
     "incremental": true,
     "paths": {
       "@/components/*": ["components/*"],
+      "@/lib/*": ["lib/*"],
+      "@/axios": ["lib/axios"],
+      "@/interfaces": ["types/interfaces"],
       "@/pages/*": ["pages/*"]
     }
   },
