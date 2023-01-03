@@ -4,12 +4,50 @@ import Image from "next/image";
 
 import { fetcher } from "@/axios";
 
-const Product = ({ product }) => {
+interface Product {
+  images: string[];
+  totalInStock: number;
+  _id: string;
+  name: string;
+  description: string;
+  fullPrice: number;
+  discountPrice: number;
+  publishedBy: PublishedBy;
+  selections: any[];
+  createdAt: string;
+  updatedAt: string;
+  __v: number;
+  reviews: any[];
+  id: string;
+}
+
+interface PublishedBy {
+  pinnedProducts: any[];
+  _id: string;
+  name: string;
+  website: string;
+  user: string;
+  createdAt: string;
+  updatedAt: string;
+  __v: number;
+  account: string;
+  banner: string;
+  logo: string;
+  story: string;
+  products: any[];
+  id: string;
+}
+
+type Props = {
+  product: Product;
+};
+
+const Product = ({ product }: Props) => {
   const { images, name } = product;
   return (
     <div>
       <h1 className="text-blue-500 font-bold">{name}</h1>
-      {images?.map((src) => (
+      {images?.map((src: string) => (
         <Image key={src} src={src} width={200} height={200} alt={name} />
       ))}
     </div>
@@ -19,7 +57,9 @@ const Product = ({ product }) => {
 // This function gets called at build time on server-side.
 // It may be called again, on a serverless function, if
 // revalidation is enabled and a new request comes in
-export const getStaticProps: GetStaticProps<any> = async (context) => {
+export const getStaticProps: GetStaticProps<{ product?: Product }> = async (
+  context
+) => {
   const { params } = context;
   console.log(params, "req");
   const productId = params?.id || "";
@@ -50,7 +90,7 @@ export async function getStaticPaths() {
   const { products } = await fetcher(URL);
 
   // Get the paths we want to pre-render based on posts
-  const paths = products.map((product) => ({
+  const paths = products.map((product: Product) => ({
     params: { id: product.id },
   }));
 

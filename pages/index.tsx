@@ -17,11 +17,49 @@ import { fetcher } from "@/axios";
 
 const inter = Inter({ subsets: ["latin"] });
 
-interface Props {}
+interface Product {
+  images: string[];
+  totalInStock: number;
+  _id: string;
+  name: string;
+  description: string;
+  fullPrice: number;
+  discountPrice?: number;
+  publishedBy: PublishedBy;
+  selections: any[];
+  createdAt: string;
+  updatedAt: string;
+  __v: number;
+  id: string;
+}
+
+interface PublishedBy {
+  pinnedProducts: any[];
+  _id: string;
+  name: string;
+  website: string;
+  user: string;
+  createdAt: string;
+  updatedAt: string;
+  __v: number;
+  account: string;
+  banner: string;
+  logo: string;
+  story: string;
+  products: any[];
+  id: string;
+}
+interface Props {
+  fallbackData: {
+    products: Product[];
+    currentPage: number;
+    totalPage: number;
+  };
+}
 
 const URL = "/products";
 
-const Home = ({ fallbackData }) => {
+const Home = ({ fallbackData }: Props) => {
   const { t } = useTranslation("common");
 
   const { data, error } = useSWR(URL, fetcher, { fallbackData });
@@ -38,7 +76,7 @@ const Home = ({ fallbackData }) => {
       </Head>
       <main className={styles.main}>
         <div className="max-w-5xl	mx-auto flex items-center flex-wrap">
-          {products?.map(({ images, id, name }) => (
+          {products?.map(({ images, id, name }: Product) => (
             <Link key={id} href={`products/${id}`}>
               <Image
                 className="w-[200px] h-[200px] object-cover"
