@@ -1,11 +1,24 @@
-import Head from 'next/head';
-import Image from 'next/image';
-import { Inter } from '@next/font/google';
-import styles from '../styles/Home.module.css';
+import type {
+  GetStaticProps,
+  GetServerSideProps,
+  InferGetStaticPropsType,
+} from "next";
+import Head from "next/head";
+import Image from "next/image";
+import { Inter } from "@next/font/google";
 
-const inter = Inter({ subsets: ['latin'] });
+import { serverSideTranslations } from "next-i18next/serverSideTranslations";
+import { useTranslation, Trans } from "next-i18next";
 
-export default function Home() {
+import styles from "../styles/Home.module.css";
+
+const inter = Inter({ subsets: ["latin"] });
+
+interface Props {}
+
+const Home = () => {
+  const { t } = useTranslation("common");
+
   return (
     <>
       <Head>
@@ -19,8 +32,19 @@ export default function Home() {
           <h1 className="text-3xl font-bold underline text-red-500">
             Hello world!
           </h1>
+          <p>{t("welcome")}</p>
         </div>
       </main>
     </>
   );
-}
+};
+
+export const getServerSideProps: GetServerSideProps<Props> = async ({
+  locale,
+}) => ({
+  props: {
+    ...(await serverSideTranslations(locale ?? "en-US", ["common", "footer"])),
+  },
+});
+
+export default Home;
