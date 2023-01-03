@@ -11,13 +11,16 @@ type Props = {
 };
 
 const Product = ({ product }: Props) => {
-  const { images, name } = product;
+  const { images, name, fullPrice, discountPrice, totalInStock } = product;
   return (
     <div>
       <h1 className="text-blue-500 font-bold">{name}</h1>
       {images?.map((src: string) => (
         <Image key={src} src={src} width={200} height={200} alt={name} />
       ))}
+      原價：{fullPrice}
+      特價：{discountPrice}
+      庫存：{totalInStock}
     </div>
   );
 };
