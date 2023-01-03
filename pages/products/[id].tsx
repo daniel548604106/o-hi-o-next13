@@ -4,42 +4,10 @@ import Image from "next/image";
 
 import { fetcher } from "@/axios";
 
-interface Product {
-  images: string[];
-  totalInStock: number;
-  _id: string;
-  name: string;
-  description: string;
-  fullPrice: number;
-  discountPrice: number;
-  publishedBy: PublishedBy;
-  selections: any[];
-  createdAt: string;
-  updatedAt: string;
-  __v: number;
-  reviews: any[];
-  id: string;
-}
-
-interface PublishedBy {
-  pinnedProducts: any[];
-  _id: string;
-  name: string;
-  website: string;
-  user: string;
-  createdAt: string;
-  updatedAt: string;
-  __v: number;
-  account: string;
-  banner: string;
-  logo: string;
-  story: string;
-  products: any[];
-  id: string;
-}
+import type { Product as ProductType } from "@/interfaces";
 
 type Props = {
-  product: Product;
+  product: ProductType;
 };
 
 const Product = ({ product }: Props) => {
@@ -57,7 +25,7 @@ const Product = ({ product }: Props) => {
 // This function gets called at build time on server-side.
 // It may be called again, on a serverless function, if
 // revalidation is enabled and a new request comes in
-export const getStaticProps: GetStaticProps<{ product?: Product }> = async (
+export const getStaticProps: GetStaticProps<{ product?: ProductType }> = async (
   context
 ) => {
   const { params } = context;
@@ -90,7 +58,7 @@ export async function getStaticPaths() {
   const { products } = await fetcher(URL);
 
   // Get the paths we want to pre-render based on posts
-  const paths = products.map((product: Product) => ({
+  const paths = products.map((product: ProductType) => ({
     params: { id: product.id },
   }));
 

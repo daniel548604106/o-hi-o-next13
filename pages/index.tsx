@@ -12,46 +12,16 @@ import { Inter } from "@next/font/google";
 import { serverSideTranslations } from "next-i18next/serverSideTranslations";
 import { useTranslation, Trans } from "next-i18next";
 
+import type { Product as ProductType } from "@/interfaces";
+
 import styles from "../styles/Home.module.css";
 import { fetcher } from "@/axios";
 
 const inter = Inter({ subsets: ["latin"] });
 
-interface Product {
-  images: string[];
-  totalInStock: number;
-  _id: string;
-  name: string;
-  description: string;
-  fullPrice: number;
-  discountPrice?: number;
-  publishedBy: PublishedBy;
-  selections: any[];
-  createdAt: string;
-  updatedAt: string;
-  __v: number;
-  id: string;
-}
-
-interface PublishedBy {
-  pinnedProducts: any[];
-  _id: string;
-  name: string;
-  website: string;
-  user: string;
-  createdAt: string;
-  updatedAt: string;
-  __v: number;
-  account: string;
-  banner: string;
-  logo: string;
-  story: string;
-  products: any[];
-  id: string;
-}
 interface Props {
   fallbackData: {
-    products: Product[];
+    products: ProductType[];
     currentPage: number;
     totalPage: number;
   };
@@ -76,7 +46,7 @@ const Home = ({ fallbackData }: Props) => {
       </Head>
       <main className={styles.main}>
         <div className="max-w-5xl	mx-auto flex items-center flex-wrap">
-          {products?.map(({ images, id, name }: Product) => (
+          {products?.map(({ images, id, name }: ProductType) => (
             <Link key={id} href={`products/${id}`}>
               <Image
                 className="w-[200px] h-[200px] object-cover"
