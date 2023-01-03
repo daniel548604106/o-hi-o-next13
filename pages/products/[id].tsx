@@ -22,7 +22,7 @@ const Product = ({ product }: Props) => {
       原價：{fullPrice}
       特價：{discountPrice}
       庫存：{totalInStock}
-      <pre>{description}</pre>
+      <div dangerouslySetInnerHTML={{ __html: description }}></div>
     </div>
   );
 };
