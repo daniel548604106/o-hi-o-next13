@@ -11,7 +11,8 @@ type Props = {
 };
 
 const Product = ({ product }: Props) => {
-  const { images, name, fullPrice, discountPrice, totalInStock } = product;
+  const { images, name, description, fullPrice, discountPrice, totalInStock } =
+    product;
   return (
     <div>
       <h1 className="text-blue-500 font-bold">{name}</h1>
@@ -21,6 +22,7 @@ const Product = ({ product }: Props) => {
       原價：{fullPrice}
       特價：{discountPrice}
       庫存：{totalInStock}
+      <pre>{description}</pre>
     </div>
   );
 };
