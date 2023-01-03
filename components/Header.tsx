@@ -1,14 +1,14 @@
-import React from 'react';
-import Image from 'next/image';
-import Link from 'next/link';
-import { useRouter } from 'next/router';
+import React from "react";
+import Image from "next/image";
+import Link from "next/link";
+import { useRouter } from "next/router";
 import {
   Bars2Icon,
   ShoppingBagIcon,
   UserIcon,
   MagnifyingGlassIcon,
   HeartIcon,
-} from '@heroicons/react/24/outline';
+} from "@heroicons/react/24/outline";
 // import { BeakerIcon } from '@heroicons/react/24/solid'
 
 // import { useDispatch, useSelector } from "react-redux";
@@ -18,7 +18,7 @@ const Header = () => {
   const router = useRouter();
   //   const dispatch = useDispatch();
   const toCart = () => {
-    router.push('/cart');
+    router.push("/cart");
   };
   //   const isUserLoggedIn = useSelector((state) => state.user.isUserLoggedIn);
   //   const currentUser = useSelector((state) => state.user.currentUser);
@@ -33,15 +33,17 @@ const Header = () => {
             // onClick={() => dispatch(toggleSideMenu())}
             className="min-w-10px text-gray-700 cursor-pointer inline-block sm:hidden h-5 mr-5"
           />
-          <Image
-            onClick={() => router.push('/')}
-            className="w-80px h-40px sm:w-100px sm:h-50px"
-            src="/O.HI.O-logo.svg"
-            width={100}
-            height={50}
-            alt="logo"
-            priority={true}
-          />
+          <Link href="/">
+            <Image
+              onClick={() => router.push("/")}
+              className="w-80px h-40px sm:w-100px sm:h-50px"
+              src="/O.HI.O-logo.svg"
+              width={100}
+              height={50}
+              alt="logo"
+              priority={true}
+            />
+          </Link>
 
           <span className="ml-10px  sm:ml-20px flex items-center p-1 sm:px-2 rounded-full sm:rounded bg-gray-100">
             <MagnifyingGlassIcon className="text-gray-600 h-5" />
@@ -66,7 +68,7 @@ const Header = () => {
             </li>
             <li
               className="px-2 cursor-pointer "
-              onClick={() => router.push('/favorite?tab=products')}
+              onClick={() => router.push("/favorite?tab=products")}
             >
               <HeartIcon className="h-5 sm:h-7 text-gray-700 hover:text-main-pink" />
             </li>
