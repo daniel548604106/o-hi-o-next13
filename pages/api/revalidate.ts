@@ -7,16 +7,16 @@ export default async function handler(
   res: NextApiResponse<Data>
 ) {
   // Check for secret to confirm this is a valid request
-  if (req.query.secret !== process.env.REVALIDATE_SECRET) {
-    return res.status(401).json({ message: "Invalid token" });
-  }
+  //   if (req.query.secret !== process.env.REVALIDATE_SECRET) {
+  //     return res.status(401).json({ message: "Invalid token" });
+  //   }
 
   const pageToRevalidate = req.query.page;
 
   if (!pageToRevalidate)
-    return res
-      .status(403)
-      .json({ message: "No page to revalidate, please specify" });
+    return res.status(403).json({
+      message: `No page to revalidate, please specify ,the current requested page is ${pageToRevalidate}`,
+    });
 
   try {
     // this should be the actual path not a rewritten path

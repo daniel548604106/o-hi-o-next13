@@ -5,8 +5,10 @@ import Head from "next/head";
 import Script from "next/script";
 import { useEffect } from "react";
 
+import useSWR, { SWRConfig } from "swr";
 import { appWithTranslation } from "next-i18next";
 import { pageview } from "@/lib/gtag";
+import { fetcher } from "@/lib/axios";
 
 import Header from "@/components/Header";
 
@@ -46,8 +48,21 @@ const App = ({ Component, pageProps }: AppProps) => {
           });
         `}
       </Script>
-      <Header />
-      <Component {...pageProps} />
+      <SWRConfig
+        value={{
+          refreshInterval: 3000,
+          // Set fetcher so that every request does not have to pass in manually
+          fetcher,
+          onError: (error, key) => {
+            if (error.status !== 403 && error.status !== 404) {
+              // log error and display UI
+            }
+          },
+        }}
+      >
+        <Header />
+        <Component {...pageProps} />
+      </SWRConfig>
     </>
   );
 };
