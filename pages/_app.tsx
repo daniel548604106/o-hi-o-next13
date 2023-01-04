@@ -1,12 +1,15 @@
 import "../styles/globals.css";
 import type { AppProps } from "next/app";
+import { useRouter } from "next/router";
 import Head from "next/head";
-import { appWithTranslation } from "next-i18next";
 import Script from "next/script";
+
+import { appWithTranslation } from "next-i18next";
 
 import Header from "@/components/Header";
 
 const App = ({ Component, pageProps }: AppProps) => {
+  const router = useRouter();
   return (
     <>
       <Head>
@@ -25,8 +28,10 @@ const App = ({ Component, pageProps }: AppProps) => {
           window.dataLayer = window.dataLayer || [];
           function gtag(){dataLayer.push(arguments);}
           gtag('js', new Date());
-          gtag('config', '${process.env.NEXT_PUBLIC_GOOGLE_ANALYTICS}');
-              `}
+          gtag('config', '${process.env.NEXT_PUBLIC_GOOGLE_ANALYTICS}', {
+            page_path: '${router.asPath}'
+          });
+        `}
       </Script>
       <Header />
       <Component {...pageProps} />
