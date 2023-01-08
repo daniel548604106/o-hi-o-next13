@@ -1,7 +1,7 @@
 import React, { useEffect, useState, memo } from "react";
 import Script from "next/script";
 
-import { isBrowser, isMobileSafari, useWindowSize } from "@/lib/helpers";
+// import { isBrowser, isMobileSafari, useWindowSize } from "@/lib/helpers";
 
 // import HeadSEO from "@/components/head-seo";
 import Header from "@/components/header1";
@@ -16,9 +16,9 @@ interface LayoutProps {
 
 const Layout = ({ site = {}, page = {}, schema, children }: LayoutProps) => {
   // set window height var (w/ safari/iOS hack)
-  const { height: windowHeight } = useWindowSize();
-  const [lockHeight, setLockHeight] = useState(false);
-  const hasChin = isMobileSafari();
+  // const { height: windowHeight } = useWindowSize();
+  // const [lockHeight, setLockHeight] = useState(false);
+  // const hasChin = isMobileSafari();
 
   // set header height
   const [headerHeight, setHeaderHeight] = useState(null);

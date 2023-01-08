@@ -5,7 +5,7 @@ import Image from "next/image";
 import useSWR from "swr";
 
 import { fetcher } from "@/axios";
-import { centsToPrice } from "@/lib/helpers";
+// import { centsToPrice } from "@/lib/helpers";
 import { ROOT_DOMAIN } from "@/lib/constants";
 import Layout from "@/components/layout";
 import NotFoundPage from "@/pages/404";
