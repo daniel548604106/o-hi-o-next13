@@ -58,7 +58,7 @@ const Layout = ({ site = {}, page = {}, schema, children }: LayoutProps) => {
         //   onSetup={({ height }) => setHeaderHeight(height)}
         />
         <main id="content">{children}</main>
-        <Footer data={site.footer} />
+        <Footer />
       </div>
     </>
   );
