@@ -4,7 +4,7 @@ import Script from "next/script";
 import { isBrowser, isMobileSafari, useWindowSize } from "@/lib/helpers";
 
 // import HeadSEO from "@/components/head-seo";
-import Header from "@/components/header";
+import Header from "@/components/header1";
 import Footer from "@/components/footer";
 
 interface LayoutProps {
