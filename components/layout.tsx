@@ -4,12 +4,12 @@ import Script from "next/script";
 // import { isBrowser, isMobileSafari, useWindowSize } from "@/lib/helpers";
 
 // import HeadSEO from "@/components/head-seo";
-import Header from "@/components/header1";
+import Header from "@/components/header";
 import Footer from "@/components/footer";
 
 interface LayoutProps {
-  site: any;
-  page: any;
+  site?: any;
+  page?: any;
   schema?: any;
   children: React.ReactNode;
 }
