@@ -47,7 +47,7 @@ const Product = ({ data }: ProductProps) => {
 
   // rehydrate our product after inventory is fetched
   useEffect(() => {
-    if (data?.product && productInventory.product) {
+    if (data?.product && productInventory?.product) {
       const { product } = productInventory;
       console.log("hihi", product);
       setProduct({
@@ -142,7 +142,7 @@ export const getStaticProps: GetStaticProps<ProductProps> = async (context) => {
 
   const URL = getProductUrl(productId as string);
 
-  const { product, site = {}, page = {} } = await fetcher(URL);
+  const { product = {}, site = {}, page = {} } = await fetcher(URL);
   // const res = await fetch('https://.../posts')
   // const posts = await res.json()
   return {
