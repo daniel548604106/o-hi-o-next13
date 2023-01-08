@@ -1,4 +1,4 @@
-import React from 'react';
+import React from "react";
 
 const Offline = () => {
   return <div>Oops you are offline! Please check your network connection</div>;
