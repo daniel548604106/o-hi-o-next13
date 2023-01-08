@@ -10,7 +10,7 @@ import { appWithTranslation } from "next-i18next";
 import { pageview } from "@/lib/gtag";
 import { fetcher } from "@/lib/axios";
 
-import Header from "@/components/Header";
+import Header from "@/components/header1";
 
 const App = ({ Component, pageProps }: AppProps) => {
   const router = useRouter();
