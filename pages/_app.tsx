@@ -60,7 +60,7 @@ const App = ({ Component, pageProps }: AppProps) => {
           },
         }}
       >
-        <Header />
+        {/* <Header /> */}
         <Component {...pageProps} />
       </SWRConfig>
     </>
