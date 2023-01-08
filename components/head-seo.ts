@@ -2,6 +2,13 @@
 // import Head from "next/head";
 // import { imageBuilder } from "@lib/sanity";
 
+import React from "react";
+
+const HeadSEO = () => {
+  return null;
+};
+
+export default HeadSEO;
 // const HeadSEO = ({ site = {}, page = {}, schema }) => {
 //   // set <head> variables
 //   const siteTitle = site.title;
