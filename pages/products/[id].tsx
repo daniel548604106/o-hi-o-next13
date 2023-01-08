@@ -40,20 +40,22 @@ const Product = ({ data }: ProductProps) => {
 
   // check our product inventory is still correct
   const { data: productInventory } = useSWR(
-    [URL],
+    URL,
     (url: string) => fetcher(url),
     { errorRetryCount: 3 }
   );
 
   // rehydrate our product after inventory is fetched
   useEffect(() => {
-    if (page.product && productInventory) {
+    if (data.product && productInventory.product) {
+      const { product } = productInventory;
+      console.log("hihi", product);
       setProduct({
-        ...page.product,
+        ...data.product,
         // inStock: productInventory.inStock,
-        totalInStock: productInventory.totalInStock,
-        fullPrice: productInventory.fullPrice,
-        discountPrice: productInventory.discountPrice,
+        totalInStock: product.totalInStock,
+        fullPrice: product.fullPrice,
+        discountPrice: product.discountPrice,
         // variants: [
         //   ...page.product.variants.map((v) => {
         //     const newInventory = productInventory.variants.find(
@@ -64,7 +66,7 @@ const Product = ({ data }: ProductProps) => {
         // ],
       });
     }
-  }, [page.product, productInventory]);
+  }, [data.product, productInventory]);
 
   if (!router.isFallback && !data) {
     return <NotFoundPage statusCode={404} />;
