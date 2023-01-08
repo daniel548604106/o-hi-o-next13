@@ -9,6 +9,7 @@ const axiosInstance = axios.create({
   headers: { "X-Custom-Header": "foobar" },
 });
 
-const fetcher = (url: string) => axiosInstance.get(url).then((res) => res.data);
+const fetcher = (url: string, params: any = {}) =>
+  axiosInstance.get(url, { ...(params && params) }).then((res) => res.data);
 
 export { axiosInstance as axios, fetcher };
