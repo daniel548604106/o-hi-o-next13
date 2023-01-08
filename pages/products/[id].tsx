@@ -17,7 +17,7 @@ const getProductUrl = (productId: string) => {
 };
 
 type ProductProps = {
-  data: {
+  data?: {
     product: ProductType;
     site: any;
     page: any;
@@ -25,18 +25,18 @@ type ProductProps = {
 };
 
 const Product = ({ data }: ProductProps) => {
-  const { site, page } = data;
+  const { site, page } = data || {};
 
   const router = useRouter();
   const { query } = router;
 
   // set our Product state
-  const [product, setProduct] = useState(data.product);
+  const [product, setProduct] = useState(data?.product);
 
   const { images, name, description, fullPrice, discountPrice, totalInStock } =
-    product;
+    product || {};
 
-  const URL = getProductUrl(data.product.id);
+  const URL = getProductUrl(data?.product?.id || "");
 
   // check our product inventory is still correct
   const { data: productInventory } = useSWR(
@@ -47,7 +47,7 @@ const Product = ({ data }: ProductProps) => {
 
   // rehydrate our product after inventory is fetched
   useEffect(() => {
-    if (data.product && productInventory.product) {
+    if (data?.product && productInventory.product) {
       const { product } = productInventory;
       console.log("hihi", product);
       setProduct({
@@ -66,7 +66,7 @@ const Product = ({ data }: ProductProps) => {
         // ],
       });
     }
-  }, [data.product, productInventory]);
+  }, [data?.product, productInventory]);
 
   if (!router.isFallback && !data) {
     return <NotFoundPage statusCode={404} />;
@@ -81,12 +81,18 @@ const Product = ({ data }: ProductProps) => {
       <div>
         <h1 className="text-blue-500 font-bold">{name}</h1>
         {images?.map((src: string) => (
-          <Image key={src} src={src} width={200} height={200} alt={name} />
+          <Image
+            key={src}
+            src={src}
+            width={200}
+            height={200}
+            alt={name || ""}
+          />
         ))}
         原價：{fullPrice}
         特價：{discountPrice}
         庫存：{totalInStock}
-        <div dangerouslySetInnerHTML={{ __html: description }}></div>
+        <div dangerouslySetInnerHTML={{ __html: description || "" }}></div>
       </div>
     </Layout>
   );
@@ -126,6 +132,7 @@ const Product = ({ data }: ProductProps) => {
 // This function gets called at build time on server-side.
 // It may be called again, on a serverless function, if
 // revalidation is enabled and a new request comes in
+
 export const getStaticProps: GetStaticProps<ProductProps> = async (context) => {
   const { params } = context;
   console.log(params, "req");
