@@ -12,4 +12,11 @@ const axiosInstance = axios.create({
 const fetcher = (url: string, params: any = {}) =>
   axiosInstance.get(url, { ...(params && params) }).then((res) => res.data);
 
-export { axiosInstance as axios, fetcher };
+const poster = (url: string, params: any = {}) => {
+  console.log(url, params, "params");
+  return axiosInstance
+    .post(url, { ...(params && params) })
+    .then((res) => res.data);
+};
+
+export { axiosInstance as axios, fetcher, poster };
