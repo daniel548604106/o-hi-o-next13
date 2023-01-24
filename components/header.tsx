@@ -9,19 +9,17 @@ import {
   MagnifyingGlassIcon,
   HeartIcon,
 } from "@heroicons/react/24/outline";
-// import { BeakerIcon } from '@heroicons/react/24/solid'
+import { useStateContext } from "../context";
 
-// import { useDispatch, useSelector } from "react-redux";
 // import { toggleSideMenu } from "../../redux/actions/globalAction";
 // import { addToFavorite } from "../../api/favoriteRequest";
+
 const Header = () => {
   const router = useRouter();
-  //   const dispatch = useDispatch();
-  const toCart = () => {
-    router.push("/cart");
-  };
-  const isUserLoggedIn = false;
-  //   const currentUser = useSelector((state) => state.user.currentUser);
+
+  const { state } = useStateContext();
+
+  const isLoggedIn = state.auth.isLoggedIn;
   //   const totalItems = useSelector((state) => state.cart.cartItems)
   //     .map((item) => item.quantity)
   //     .reduce((total, current) => total + current);
@@ -50,26 +48,19 @@ const Header = () => {
                 className=" hidden sm:block bg-gray-100 rounded text-xs sm:text-sm p-1"
               />
             </li>
-            <li className="cursor-pointer ">
-              {isUserLoggedIn ? (
-                <img
-                  onClick={() => router.push("/my")}
-                  // src={currentUser.picture}
-                  className="min-w-30px w-30px h-30px  sm:w-40px sm:h-40px rounded-full"
-                />
-              ) : (
-                <UserIcon
-                  onClick={() => router.push("/auth")}
-                  className="h-5 sm:h-7 text-gray-700 hover:text-main-pink"
-                />
-              )}
-            </li>
-            <li className="cursor-pointer relative " onClick={() => toCart()}>
-              <span className="absolute top-0 transform -translate-y-1 min-w-20px min-h-20px flex items-center justify-center right-0 bg-main-pink text-white rounded-full text-xs sm:text-xs">
-                {/* {totalItems} */}
-              </span>
-              <ShoppingBagIcon className="h-5 sm:h-7 text-gray-700 hover:text-main-pink" />
-            </li>
+            <Link href={isLoggedIn ? "/account" : "/auth"}>
+              <li className="cursor-pointer ">
+                <UserIcon className="h-5 sm:h-7 text-gray-700 hover:text-main-pink" />
+              </li>
+            </Link>
+            <Link href="/cart">
+              <li className="cursor-pointer relative ">
+                <span className="absolute top-0 transform -translate-y-1 min-w-20px min-h-20px flex items-center justify-center right-0 bg-main-pink text-white rounded-full text-xs sm:text-xs">
+                  {/* {totalItems} */}
+                </span>
+                <ShoppingBagIcon className="h-5 sm:h-7 text-gray-700 hover:text-main-pink" />
+              </li>
+            </Link>
             <li>
               <Bars2Icon
                 // onClick={() => dispatch(toggleSideMenu())}

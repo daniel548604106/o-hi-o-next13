@@ -30,3 +30,10 @@ export interface PublishedBy {
   products: any[];
   id: string;
 }
+
+export interface User {
+  name: string;
+  birthday: string;
+  picture: string;
+  gender: string;
+}

@@ -4,16 +4,35 @@ import { useRouter } from "next/router";
 import Head from "next/head";
 import Script from "next/script";
 import { useEffect } from "react";
-
-import useSWR, { SWRConfig } from "swr";
+import { QueryClient, QueryClientProvider } from "react-query";
 import { appWithTranslation } from "next-i18next";
-import { pageview } from "@/lib/gtag";
-import { fetcher } from "@/lib/axios";
 
-// import Header from "@/components/header";
+import Cookies from "@/lib/cookies";
+import { pageview } from "@/lib/gtag";
+import { StateContextProvider, useStateContext } from "../context";
+
+const ValidateAuth = () => {
+  const { dispatch, state } = useStateContext();
+
+  // useEffect(async () => {
+  //   const accessToken: string = Cookies.get("accessToken") || "";
+  //   const refreshToken: string = Cookies.get("refreshToken") || "";
+
+  //   if (Boolean(accessToken) && Boolean(refreshToken)) {
+  //     const valid = await validateAccessTokenAPI();
+  //   } else {
+  //     Cookies.remove("accessToken");
+  //     Cookies.remove("refreshToken");
+  //   }
+  // }, [dispatch]);
+  return null;
+};
 
 const App = ({ Component, pageProps }: AppProps) => {
   const router = useRouter();
+
+  // Create a client
+  const queryClient = new QueryClient();
 
   useEffect(() => {
     const handleRouteChange = (url: string) => {
@@ -48,21 +67,13 @@ const App = ({ Component, pageProps }: AppProps) => {
           });
         `}
       </Script>
-      <SWRConfig
-        value={{
-          refreshInterval: 3000,
-          // Set fetcher so that every request does not have to pass in manually
-          fetcher,
-          onError: (error, key) => {
-            if (error.status !== 403 && error.status !== 404) {
-              // log error and display UI
-            }
-          },
-        }}
-      >
-        {/* <Header /> */}
-        <Component {...pageProps} />
-      </SWRConfig>
+
+      <QueryClientProvider client={queryClient}>
+        <StateContextProvider>
+          <Component {...pageProps} />
+          <ValidateAuth />
+        </StateContextProvider>
+      </QueryClientProvider>
     </>
   );
 };

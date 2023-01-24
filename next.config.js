@@ -34,6 +34,7 @@ const nextConfig = {
     LINE_ID: process.env.LINE_ID,
     LINE_URI: process.env.LINE_URI,
     LINE_SECRET: process.env.LINE_SECRET,
+    DEV_CNAME: process.env.DEV_CNAME,
   },
 };
 

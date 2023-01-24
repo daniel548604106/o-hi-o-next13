@@ -19,6 +19,8 @@
       "@/components/*": ["components/*"],
       "@/lib/*": ["lib/*"],
       "@/axios": ["lib/axios"],
+      "@/context": ["context/*"],
+      "@/api": ["api/*"],
       "@/interfaces": ["types/interfaces"],
       "@/pages/*": ["pages/*"]
     }
