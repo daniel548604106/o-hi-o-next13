@@ -38,10 +38,10 @@ const Home = ({ fallbackData }: Props) => {
 
   const { site = {}, page = {}, products } = data;
 
-  const { dispatch, state, theme, setTheme } = useStateContext();
+  const { dispatch, state } = useStateContext();
   const context = React.useContext(StateContext);
 
-  console.log(theme, state, "context");
+  console.log(state, "context");
 
   return (
     <>
@@ -77,11 +77,11 @@ const Home = ({ fallbackData }: Props) => {
             //     gender: "",
             //   },
             // });
-            setTheme("dark");
+            // setTheme("dark");
           }}
         >
           {" "}
-          {theme}
+          {/* {theme} */}
         </div>
       </Layout>
     </>
