@@ -54,17 +54,17 @@ axiosInstance.interceptors.response.use(
 
       // Refresh Token
       case 403: {
-        if (!originalRequest._retry && refreshToken) {
-          originalRequest._retry = true;
-          const { accessToken } = await refreshAccessTokenAPI({
-            email,
-            refreshToken,
-          });
-          axios.defaults.headers.common["Authorization"] =
-            "Bearer " + accessToken;
-          return axiosInstance(originalRequest);
-        }
-        return Promise.reject(error);
+        // if (!originalRequest._retry && refreshToken) {
+        //   originalRequest._retry = true;
+        //   const { accessToken } = await refreshAccessTokenAPI({
+        //     email,
+        //     refreshToken,
+        //   });
+        //   axios.defaults.headers.common["Authorization"] =
+        //     "Bearer " + accessToken;
+        //   return axiosInstance(originalRequest);
+        // }
+        // return Promise.reject(error);
       }
       default:
         return Promise.reject(error);
