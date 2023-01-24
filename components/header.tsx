@@ -14,7 +14,10 @@ import { useStateContext } from "../context";
 // import { toggleSideMenu } from "../../redux/actions/globalAction";
 // import { addToFavorite } from "../../api/favoriteRequest";
 
-const Header = () => {
+interface HeaderProps {
+  logoImage?: string;
+}
+const Header = ({ logoImage }: HeaderProps) => {
   const router = useRouter();
 
   const { state } = useStateContext();
@@ -27,15 +30,17 @@ const Header = () => {
     <header className="border-b p-3 sm:p-4">
       <div className="max-w-6xl h-60px mx-auto flex items-center justify-between">
         <div className="flex items-center">
-          <Image
-            onClick={() => router.push("/")}
-            className="w-80px h-40px sm:w-100px sm:h-50px "
-            src="/O.HI.O-logo.svg"
-            width={100}
-            height={50}
-            alt="logo"
-            priority={true}
-          />
+          <Link href="/">
+            <Image
+              onClick={() => router.push("/")}
+              className="w-20 h-10 sm:w-[100px] sm:h-[50px] object-contain"
+              src={logoImage || "/O.HI.O-logo.svg"}
+              width={100}
+              height={50}
+              alt="logo"
+              priority={true}
+            />
+          </Link>
         </div>
 
         <nav>

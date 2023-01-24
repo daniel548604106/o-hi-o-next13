@@ -54,8 +54,9 @@ const Layout = ({ site = {}, page = {}, schema, children }: LayoutProps) => {
         // style={headerHeight ? { "--headerHeight": `${headerHeight}px` } : null}
       >
         <Header
-        //   data={site.header}
-        //   onSetup={({ height }) => setHeaderHeight(height)}
+          logoImage={site?.logo}
+          //   data={site.header}
+          //   onSetup={({ height }) => setHeaderHeight(height)}
         />
         <main id="content">{children}</main>
         <Footer />
