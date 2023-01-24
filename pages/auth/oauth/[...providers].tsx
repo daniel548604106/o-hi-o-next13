@@ -21,14 +21,14 @@ const OAuthProviders = () => {
     onSuccess: async ({ data }) => {
       const { user, accessToken, refreshToken } = data;
       console.log(data, "data");
-      await dispatch({
-        type: "LOGIN",
-        payload: {
-          user,
-          accessToken,
-          refreshToken,
-        },
-      });
+      // await dispatch({
+      //   type: "LOGIN",
+      //   payload: {
+      //     user,
+      //     accessToken,
+      //     refreshToken,
+      //   },
+      // });
       console.log(dispatch, contextState, "state here");
 
       // Cookies.set('refreshToken', refreshToken);
