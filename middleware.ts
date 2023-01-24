@@ -11,7 +11,6 @@ export const config = {
      * 3. /examples (inside /public)
      * 4. all root files inside /public (e.g. /favicon.ico)
      */
-
     "/?((?!api/|_next/|_static/|public/|images/|sw.js|[\\w-]+\\.\\w+).*)",
     ...SSG_ROUTES,
   ],
@@ -21,7 +20,7 @@ export default async function middleware(req: NextRequest) {
   const url = req.nextUrl;
 
   // Get hostname of request (e.g. demo.vercel.pub, demo.localhost:3000)
-  const hostname = req.headers.get("host") || process.env.DEV_CNAME;
+  const hostname = req.headers.get("host");
 
   // Get the pathname of the request (e.g. /, /about, /blog/first-post)
   const pathname = url.pathname;
@@ -33,9 +32,15 @@ export default async function middleware(req: NextRequest) {
   const currentHost =
     process.env.NODE_ENV === "production" && process.env.VERCEL === "1"
       ? hostname
-          ?.replace(`.vercel.pub`, "")
-          ?.replace(`.platformize.vercel.app`, "")
+          // Custom Domain
+          ?.replace(`.o-hi-o-official.store`, "")
+          // Production Vercel Domain
+          ?.replace(`.o-hi-o-official.vercel.app`, "")
+          // Stage Vercel Domain
+          ?.replace(`.o-hi-o-official-stage.vercel.app`, "")
       : hostname?.replace(`.localhost:3000`, "");
+
+  console.log(currentHost, "currentHost");
 
   // Only rewrite when subdomain is found & matches SSG routes to `/_sites/[site] dynamic route
   if (SSG_ROUTES.includes(pathname) && currentHost !== "localhost:3000") {
