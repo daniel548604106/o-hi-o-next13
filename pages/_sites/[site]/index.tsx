@@ -4,12 +4,7 @@ import Image from "next/image";
 import { fetcher } from "@/axios";
 import Loader from "@/components/loader";
 
-import type { GetStaticPaths, GetStaticProps } from "next";
-import type { _SiteData, Meta } from "@/types";
-
-interface PathProps {
-  site: string;
-}
+import type { GetStaticProps } from "next";
 
 interface IndexProps {
   stringifiedData: string;
@@ -19,7 +14,7 @@ export default function Index({ stringifiedData }: IndexProps) {
   const router = useRouter();
   if (router.isFallback) return <Loader />;
 
-  const data = JSON.parse(stringifiedData) as _SiteData;
+  const data = JSON.parse(stringifiedData);
   const { shop } = data;
   const { site, logo } = shop;
   const { meta: siteMeta } = site;
@@ -30,7 +25,7 @@ export default function Index({ stringifiedData }: IndexProps) {
     ogUrl: siteMeta.customDomain
       ? siteMeta.customDomain
       : `https://${siteMeta.subdomain}.vercel.pub`,
-  } as Meta;
+  };
 
   return (
     <Layout site={site}>
@@ -42,7 +37,7 @@ export default function Index({ stringifiedData }: IndexProps) {
   );
 }
 
-export const getStaticPaths: GetStaticPaths<PathProps> = async () => {
+export const getStaticPaths = async () => {
   const { domains } = await fetcher("/shops/domain");
   const paths = domains?.map((domain: string) => ({
     params: {
@@ -56,7 +51,7 @@ export const getStaticPaths: GetStaticPaths<PathProps> = async () => {
   };
 };
 
-export const getStaticProps: GetStaticProps<IndexProps, PathProps> = async ({
+export const getStaticProps: GetStaticProps<IndexProps> = async ({
   params,
 }) => {
   if (!params) throw new Error("No path parameters found");
