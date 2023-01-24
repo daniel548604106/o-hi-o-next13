@@ -19,7 +19,7 @@ import { useStateContext, StateContext } from "../context";
 import styles from "../styles/Home.module.css";
 import { fetcher } from "@/axios";
 
-const inter = Inter({ subsets: ["latin"] });
+// const inter = Inter({ subsets: ["latin"] });
 
 interface Props {
   fallbackData: {
@@ -34,9 +34,9 @@ const URL = "/products";
 const Home = ({ fallbackData }: Props) => {
   const { t } = useTranslation("common");
 
-  const { data, error } = useSWR(URL, fetcher, { fallbackData });
+  // const { data, error } = useSWR(URL, fetcher, { fallbackData });
 
-  const { site = {}, page = {}, products } = data;
+  // const { site = {}, page = {}, products } = data;
 
   const { dispatch, state } = useStateContext();
   const context = React.useContext(StateContext);
@@ -46,9 +46,9 @@ const Home = ({ fallbackData }: Props) => {
   return (
     <>
       <Layout
-        site={site}
-        page={page}
-        // schema={getProductSchema({ query, product, activeVariantID, site })}
+      // site={site}
+      // page={page}
+      // schema={getProductSchema({ query, product, activeVariantID, site })}
       >
         {/* <main className={styles.main}>
           <div className="max-w-5xl	mx-auto flex items-center flex-wrap">
