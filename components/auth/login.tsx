@@ -6,7 +6,6 @@ import React, { useState } from "react";
 import { useTranslation } from "next-i18next";
 import { Field, Form, ErrorMessage, Formik, FormikProps } from "formik";
 import { useRouter } from "next/router";
-import { poster } from "@/axios";
 
 interface LoginProps extends ActiveComponentProps {}
 
@@ -14,11 +13,6 @@ const Login = ({ setActiveTab }: LoginProps) => {
   const { t } = useTranslation("auth");
 
   const router = useRouter();
-
-  // const { data, error, mutate } = useSWR(
-  //   { url: "/oauth/login", params: { type: provider, code } },
-  //   ({ url, params }) => poster(url, params)
-  // );
 
   const handleLogin = async ({
     email,
@@ -28,7 +22,7 @@ const Login = ({ setActiveTab }: LoginProps) => {
     password: string;
   }) => {
     try {
-      const { data } = await apiPostLogin({ account: email, password });
+      // const { data } = await apiPostLogin({ account: email, password });
       //   Cookie.set("account", data.user);
       //   Cookie.set("token", data.token);
       //   dispatch(setUserLoggedIn(data));
