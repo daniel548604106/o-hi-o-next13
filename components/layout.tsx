@@ -3,7 +3,7 @@ import Script from "next/script";
 
 // import { isBrowser, isMobileSafari, useWindowSize } from "@/lib/helpers";
 
-// import HeadSEO from "@/components/head-seo";
+import HeadSEO from "@/components/head-seo";
 import Header from "@/components/header";
 import Footer from "@/components/footer";
 

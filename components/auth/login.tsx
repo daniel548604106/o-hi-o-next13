@@ -1,10 +1,12 @@
 // typescript import
 import { ActiveComponentProps, TabsEnum } from "./";
 
+import useSWR from "swr";
 import React, { useState } from "react";
 import { useTranslation } from "next-i18next";
 import { Field, Form, ErrorMessage, Formik, FormikProps } from "formik";
 import { useRouter } from "next/router";
+import { poster } from "@/axios";
 
 interface LoginProps extends ActiveComponentProps {}
 
@@ -13,17 +15,27 @@ const Login = ({ setActiveTab }: LoginProps) => {
 
   const router = useRouter();
 
-  //   const handleLogin = async () => {
-  //     try {
-  //       const { data } = await apiPostLogin({ account, password });
-  //       Cookie.set("me", data.user);
-  //       Cookie.set("token", data.token);
-  //       dispatch(closeLoginModal());
-  //       dispatch(setUserLoggedIn(data));
-  //     } catch (error) {
-  //       console.log("失敗");
-  //     }
-  //   };
+  // const { data, error, mutate } = useSWR(
+  //   { url: "/oauth/login", params: { type: provider, code } },
+  //   ({ url, params }) => poster(url, params)
+  // );
+
+  const handleLogin = async ({
+    email,
+    password,
+  }: {
+    email: string;
+    password: string;
+  }) => {
+    try {
+      const { data } = await apiPostLogin({ account: email, password });
+      //   Cookie.set("account", data.user);
+      //   Cookie.set("token", data.token);
+      //   dispatch(setUserLoggedIn(data));
+    } catch (error) {
+      console.log("失敗");
+    }
+  };
   return (
     <Formik
       initialValues={{ email: "", password: "" }}
@@ -43,13 +55,14 @@ const Login = ({ setActiveTab }: LoginProps) => {
         return errors;
       }}
       onSubmit={(values, { setSubmitting }) => {
+        const { email, password } = values;
         setTimeout(() => {
-          alert(JSON.stringify(values, null, 2));
+          handleLogin({ email, password });
           setSubmitting(false);
         }, 400);
       }}
     >
-      {({ values, errors, touched, isSubmitting }: FormikProps<any>) => (
+      {({ isSubmitting }: FormikProps<any>) => (
         <Form>
           <div className="space-y-4 text-left">
             <div>

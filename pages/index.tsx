@@ -3,6 +3,7 @@ import type {
   GetServerSideProps,
   InferGetStaticPropsType,
 } from "next";
+import React from "react";
 import Head from "next/head";
 import useSWR from "swr";
 import Image from "next/image";
@@ -13,6 +14,7 @@ import { serverSideTranslations } from "next-i18next/serverSideTranslations";
 import { useTranslation, Trans } from "next-i18next";
 
 import type { Product as ProductType } from "@/interfaces";
+import { useStateContext, StateContext } from "../context";
 
 import styles from "../styles/Home.module.css";
 import { fetcher } from "@/axios";
@@ -36,6 +38,11 @@ const Home = ({ fallbackData }: Props) => {
 
   const { site = {}, page = {}, products } = data;
 
+  const { dispatch, state, theme, setTheme } = useStateContext();
+  const context = React.useContext(StateContext);
+
+  console.log(theme, state, "context");
+
   return (
     <>
       <Layout
@@ -43,7 +50,7 @@ const Home = ({ fallbackData }: Props) => {
         page={page}
         // schema={getProductSchema({ query, product, activeVariantID, site })}
       >
-        <main className={styles.main}>
+        {/* <main className={styles.main}>
           <div className="max-w-5xl	mx-auto flex items-center flex-wrap">
             {products?.map(({ images, id, name }: ProductType) => (
               <Link key={id} href={`products/${id}`}>
@@ -58,7 +65,24 @@ const Home = ({ fallbackData }: Props) => {
             ))}
             <p>{t("welcome")}</p>
           </div>
-        </main>
+        </main> */}
+        <div
+          onClick={() => {
+            // dispatch({
+            //   type: "SET_LOGIN",
+            //   payload: {
+            //     name: "danie",
+            //     picture: "",
+            //     birthday: "s",
+            //     gender: "",
+            //   },
+            // });
+            setTheme("dark");
+          }}
+        >
+          {" "}
+          {theme}
+        </div>
       </Layout>
     </>
   );
