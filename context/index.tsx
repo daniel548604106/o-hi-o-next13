@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useReducer } from "react";
 import { User } from "@/interfaces";
 import Cookies from "@/lib/cookies";
 import { addAxiosToken } from "@/axios";
@@ -36,42 +36,47 @@ const StateContext = React.createContext<
 
 const stateReducer = (state: State, action: Action) => {
   console.log(state, action, "trigger");
+  // switch (action.type) {
+  //   case "LOGIN": {
+  //     const { accessToken, refreshToken, user } = action.payload || {};
+  //     localStorage.setItem("user", JSON.stringify(user));
+
+  //     addAxiosToken(accessToken);
+  //     Cookies.set("accessToken", accessToken);
+  //     Cookies.set("refreshToken", refreshToken);
+
+  //     return {
+  //       ...state,
+  //       auth: {
+  //         isLoggedIn: true,
+  //         user,
+  //       },
+  //     };
+  //   }
+  //   case "VALIDATE_TOKEN": {
+  //     const { accessToken, refreshToken } = action.payload;
+  //     // check token , if available , then set login , if not , then refresh token
+  //     console.log(accessToken, "token");
+
+  //     return {
+  //       ...state,
+  //       auth: { isLoggedIn: true },
+  //     };
+  //   }
+  //   default: {
+  //     return state;
+  //     throw new Error(`Unhandled action type`);
+  //   }
+  // }
+
   switch (action.type) {
-    case "LOGIN": {
-      const { accessToken, refreshToken, user } = action.payload || {};
-      localStorage.setItem("user", JSON.stringify(user));
-
-      addAxiosToken(accessToken);
-      Cookies.set("accessToken", accessToken);
-      Cookies.set("refreshToken", refreshToken);
-
-      return {
-        ...state,
-        auth: {
-          isLoggedIn: true,
-          user,
-        },
-      };
-    }
-    case "VALIDATE_TOKEN": {
-      const { accessToken, refreshToken } = action.payload;
-      // check token , if available , then set login , if not , then refresh token
-      console.log(accessToken, "token");
-
-      return {
-        ...state,
-        auth: { isLoggedIn: true },
-      };
-    }
-    default: {
+    default:
       return state;
-      throw new Error(`Unhandled action type`);
-    }
   }
 };
 
 const StateContextProvider = ({ children }: StateContextProviderProps) => {
-  const [state, dispatch] = React.useReducer(stateReducer, initialState);
+  const [state, dispatch] = useReducer(stateReducer, initialState);
   const [theme, setTheme] = useState("light");
   const value = { state, dispatch, theme, setTheme };
 
