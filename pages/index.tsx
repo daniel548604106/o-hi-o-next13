@@ -1,11 +1,6 @@
-import type {
-  GetStaticProps,
-  GetServerSideProps,
-  InferGetStaticPropsType,
-} from "next";
+import type { GetServerSideProps, InferGetStaticPropsType } from "next";
 import React from "react";
 import Head from "next/head";
-import useSWR from "swr";
 import Image from "next/image";
 import Link from "next/link";
 import { Inter } from "@next/font/google";
@@ -14,7 +9,6 @@ import { serverSideTranslations } from "next-i18next/serverSideTranslations";
 import { useTranslation, Trans } from "next-i18next";
 
 import type { Product as ProductType } from "@/interfaces";
-import { useStateContext, StateContext } from "../context";
 
 import styles from "../styles/Home.module.css";
 import { fetcher } from "@/axios";
@@ -37,11 +31,6 @@ const Home = ({ fallbackData }: Props) => {
   // const { data, error } = useSWR(URL, fetcher, { fallbackData });
 
   // const { site = {}, page = {}, products } = data;
-
-  const { dispatch, state } = useStateContext();
-  const context = React.useContext(StateContext);
-
-  console.log(state, "context");
 
   return (
     <>

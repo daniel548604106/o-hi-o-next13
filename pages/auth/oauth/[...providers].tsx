@@ -5,33 +5,23 @@ import Cookies from "js-cookie";
 import Loader from "@/components/loader";
 import { postOAuthLoginAPI } from "../../../api/auth";
 import { useMutation } from "react-query";
-import { useStateContext } from "../../../context";
 import { addAxiosToken } from "@/axios";
+import { useAppSelector, useAppDispatch } from "@/redux/hooks";
+import { login } from "@/redux/slices/authSlice";
 
 const OAuthProviders = () => {
   const router = useRouter();
 
   const { code, state, providers } = router.query;
-
-  const { dispatch, state: contextState } = useStateContext();
+  const dispatch = useAppDispatch();
 
   const provider = providers?.[0] || "";
 
   const { mutate } = useMutation(postOAuthLoginAPI, {
     onSuccess: async ({ data }) => {
-      const { user, accessToken, refreshToken } = data;
+      const { user, accessToken } = data;
       console.log(data, "data");
-      // await dispatch({
-      //   type: "LOGIN",
-      //   payload: {
-      //     user,
-      //     accessToken,
-      //     refreshToken,
-      //   },
-      // });
-      console.log(dispatch, contextState, "state here");
-
-      // Cookies.set('refreshToken', refreshToken);
+      await dispatch(login({ user, accessToken }));
 
       setTimeout(() => {
         router.push("/");

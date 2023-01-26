@@ -8,15 +8,14 @@ import Modules from "@/components/modules";
 import type { GetStaticProps } from "next";
 
 interface IndexProps {
-  data: unknown;
+  stringifiedData: string;
 }
 
-export default function Index({ data }: IndexProps) {
+export default function Index({ stringifiedData }: IndexProps) {
   const router = useRouter();
   if (router.isFallback) return <Loader />;
 
-  console.log(data, "datata");
-
+  const data = JSON.parse(stringifiedData);
   const { site, page } = data || {};
   const { site: siteData, logo } = site || {};
   const { meta: siteMeta } = siteData || {};
@@ -36,7 +35,7 @@ export default function Index({ data }: IndexProps) {
         {meta.description}
         <Image src={logo} alt={meta.title} width={200} height={200} />
         {/* @ts-ignore */}
-        {page?.modules?.map((module) => (
+        {page.modules.map((module) => (
           <Modules key={module.id} module={module} />
         ))}
       </div>
@@ -44,12 +43,13 @@ export default function Index({ data }: IndexProps) {
   );
 }
 
-export const getStaticPaths = async () => {
+export const getStaticPaths = async ({ params }) => {
+  console.log(params, "req");
   const { domains } = await fetcher("/shops/domain");
   const paths = domains?.map((data: { domain: string; page: string }) => ({
     params: {
       site: data.domain,
-      path: "/",
+      path: data.page,
     },
   }));
 
@@ -65,15 +65,15 @@ export const getStaticProps: GetStaticProps<IndexProps> = async ({
   if (!params) throw new Error("No path parameters found");
 
   console.log(params, "params");
-  const { site } = params;
+  const { site, path } = params;
 
-  const data = await fetcher(`/shops/${site}?page=/`);
+  const data = await fetcher(`/shops/${site}?page=${path}`);
 
-  if (!data) return { notFound: true, revalidate: 10 };
+  if (!data || !data.page) return { notFound: true, revalidate: 10 };
 
   return {
     props: {
-      data,
+      stringifiedData: JSON.stringify(data),
     },
     revalidate: 3600,
   };

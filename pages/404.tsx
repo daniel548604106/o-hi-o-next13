@@ -2,6 +2,7 @@ import React from "react";
 import Error from "next/error";
 
 import Layout from "@/components/layout";
+import Link from "next/link";
 
 interface NotFoundPageProps {
   statusCode: number;
@@ -10,10 +11,10 @@ interface NotFoundPageProps {
 const NotFoundPage = ({ statusCode = 404 }: NotFoundPageProps) => {
   return (
     // <Layout>
-    <Error
-      title={`"Error Page (404)" is not set in Sanity, or the page data is missing`}
-      statusCode={statusCode}
-    />
+    <div>
+      Not found 404
+      <Link href="/">Go to Homepage</Link>
+    </div>
     // </Layout>
   );
 };
