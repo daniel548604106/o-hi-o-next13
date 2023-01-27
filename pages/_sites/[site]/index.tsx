@@ -16,7 +16,7 @@ export default function Index({ data }: IndexProps) {
   if (router.isFallback) return <Loader />;
 
   console.log(data, "datata");
-
+  // @ts-ignore
   const { site, page } = data || {};
   const { site: siteData, logo } = site || {};
   const { meta: siteMeta } = siteData || {};

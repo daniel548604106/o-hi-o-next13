@@ -43,8 +43,7 @@ export default function Index({ stringifiedData }: IndexProps) {
   );
 }
 
-export const getStaticPaths = async ({ params }) => {
-  console.log(params, "req");
+export const getStaticPaths = async () => {
   const { domains } = await fetcher("/shops/domain");
   const paths = domains?.map((data: { domain: string; page: string }) => ({
     params: {
