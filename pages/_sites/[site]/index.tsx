@@ -69,7 +69,7 @@ export const getStaticProps: GetStaticProps<IndexProps> = async ({
 
   const data = await fetcher(`/shops/${site}?page=/`);
 
-  if (!data) return { notFound: true, revalidate: 10 };
+  if (!data || !data.page) return { notFound: true, revalidate: 10 };
 
   return {
     props: {
