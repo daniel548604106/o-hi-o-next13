@@ -1,3 +1,23 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+:root {
+  --swiper-navigation-color: #fff;
+}
+
+.swiper-button-prev:after,
+.swiper-button-next:after {
+  visibility: hidden;
+  color: var(--swiper-navigation-color);
+  background: rgba(0, 0, 0, 0.3);
+  padding: 20px 10px;
+  border-radius: 4px;
+  @media (min-width: 468px) {
+    visibility: auto;
+  }
+}
+
+.swiper-pagination-bullet-active {
+  background: var(--swiper-navigation-color) !important;
+}

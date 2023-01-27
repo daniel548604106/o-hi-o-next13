@@ -1,3 +1,18 @@
+export interface Banner {
+  _id: string;
+  image: string;
+  title: string;
+  createdAt: Date;
+  link: string;
+  updatedAt: Date;
+}
+
+export interface PaginatedProducts {
+  products: Product[];
+  currentPage: number;
+  totalPage: number;
+}
+
 export interface Product {
   images: string[];
   totalInStock: number;
