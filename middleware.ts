@@ -43,7 +43,16 @@ export default async function middleware(req: NextRequest) {
   console.log(currentHost, "currentHost");
 
   // Only rewrite when subdomain is found & matches SSG routes to `/_sites/[site] dynamic route
-  if (SSG_ROUTES.includes(pathname) && currentHost !== "localhost:3000") {
+  if (
+    SSG_ROUTES.includes(pathname) &&
+    // ignore default route for the whole platform
+    ![
+      "localhost:3000",
+      "o-hi-o-official.store",
+      "o-hi-o-official.vercel.app",
+      "o-hi-o-official-stage.vercel.app",
+    ].includes(currentHost || "")
+  ) {
     return NextResponse.rewrite(
       new URL(`/_sites/${currentHost}${pathname}`, req.url)
     );
