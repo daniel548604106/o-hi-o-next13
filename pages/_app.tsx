@@ -30,7 +30,8 @@ const ValidateAuth = () => {
   return null;
 };
 
-const Site = ({ Component, pageProps }: AppProps) => {
+// @ts-ignore
+const Site = ({ Component, pageProps }) => {
   const { data } = pageProps;
 
   useEffect(() => {
