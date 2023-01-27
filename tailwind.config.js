@@ -10,8 +10,16 @@ module.exports = {
         primary: "#EB5756",
         white: "#FFFFFF",
         black: "#00000",
+        "light-blue": "#178fac",
+      },
+      aspectRatio: {
+        "5/2": "5 / 2",
+        "4/3": "4 / 3",
       },
     },
   },
-  plugins: [],
+  plugins: [
+    require("@tailwindcss/line-clamp"),
+    require("tailwind-scrollbar-hide"),
+  ],
 };

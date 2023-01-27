@@ -38,7 +38,7 @@ axiosInstance.interceptors.response.use(
   (res: AxiosResponse<Response<unknown>>) => res,
   async (error) => {
     const refreshToken = Cookies.get("refreshToken");
-    const { email } = JSON.parse(localStorage.getItem("user") || "");
+    // const { email } = JSON.parse(window?.localStorage.getItem("user") || "");
 
     const originalRequest = error?.config;
 

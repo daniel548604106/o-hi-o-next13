@@ -9,6 +9,8 @@ import { fetcher } from "@/axios";
 import { ROOT_DOMAIN } from "@/lib/constants";
 import Layout from "@/components/layout";
 import NotFoundPage from "@/pages/404";
+import ImageSlider from "@/components/image-slider";
+import Cta from "@/components/products/cta";
 
 import type { Product as ProductType } from "@/interfaces";
 
@@ -32,6 +34,7 @@ const Product = ({ data }: ProductProps) => {
 
   // set our Product state
   const [product, setProduct] = useState(data?.product);
+  const [isSlideModalOpen, setSlideModalOpen] = useState<boolean>(false);
 
   const { images, name, description, fullPrice, discountPrice, totalInStock } =
     product || {};
@@ -78,21 +81,36 @@ const Product = ({ data }: ProductProps) => {
       page={page}
       // schema={getProductSchema({ query, product, activeVariantID, site })}
     >
-      <div>
-        <h1 className="text-blue-500 font-bold">{name}</h1>
-        {images?.map((src: string) => (
-          <Image
-            key={src}
-            src={src}
-            width={200}
-            height={200}
-            alt={name || ""}
-          />
-        ))}
-        原價：{fullPrice}
-        特價：{discountPrice}
-        庫存：{totalInStock}
-        <div dangerouslySetInnerHTML={{ __html: description || "" }}></div>
+      <div className="max-w-6xl mx-auto p-0 sm:p-5x">
+        <div className={`flex  mx-auto flex-col sm:flex-row mb-3 sm:mb-8`}>
+          <section className={"w-full max-w-5xl"}>
+            <ImageSlider
+              slideImages={images?.map((src) => ({ src })) || []}
+              isSlideModalOpen={isSlideModalOpen}
+              setSlideModalOpen={setSlideModalOpen}
+            />
+          </section>
+          <section className="w-full sm:w-[60%] sm:ml-5 px-3 py-3"></section>
+        </div>
+
+        <div className="flex flex-col sm:flex-row mx-auto mb-3 sm:mb-[30px] px-3 ">
+          <h1 className="text-xl font-bold">{name}</h1>
+          原價：{fullPrice}
+          特價：{discountPrice}
+          庫存：{totalInStock}
+          <section className="sticky w-full sm:w-60% sm:ml-5   top-20 self-start">
+            <Cta productId={product?.id || ""} />
+            {/* <ShopInfo product={product} shopInfo={shopInfo} /> */}
+          </section>
+          <section className="max-w-5xl w-full">
+            <div dangerouslySetInnerHTML={{ __html: description || "" }}></div>
+          </section>
+        </div>
+        <div className="px-3">
+          <section>
+            {/* <ProductRecommendation products={recommendedProducts} /> */}
+          </section>
+        </div>
       </div>
     </Layout>
   );

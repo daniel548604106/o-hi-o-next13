@@ -1,87 +1,76 @@
-import type {
-  GetStaticProps,
-  GetServerSideProps,
-  InferGetStaticPropsType,
-} from "next";
+import type { GetServerSideProps, InferGetServerSidePropsType } from "next";
 import React from "react";
-import Head from "next/head";
-import useSWR from "swr";
-import Image from "next/image";
-import Link from "next/link";
-import { Inter } from "@next/font/google";
 import Layout from "@/components/layout";
 import { serverSideTranslations } from "next-i18next/serverSideTranslations";
-import { useTranslation, Trans } from "next-i18next";
+import { useTranslation } from "next-i18next";
 
-import type { Product as ProductType } from "@/interfaces";
-import { useStateContext, StateContext } from "../context";
+import type {
+  PaginatedProducts as PaginatedProductsType,
+  Banner as BannerType,
+} from "@/interfaces";
 
-import styles from "../styles/Home.module.css";
-import { fetcher } from "@/axios";
-
-// const inter = Inter({ subsets: ["latin"] });
+import {
+  getBannersAPI,
+  getProductsAPI,
+  getRecommendedProductsAPI,
+  getDiscountedProductsAPI,
+} from "../api";
+import Image from "next/image";
+import Banners from "@/components/home/banners";
+import ProductList from "@/components/home/product-list";
 
 interface Props {
-  fallbackData: {
-    products: ProductType[];
-    currentPage: number;
-    totalPage: number;
-  };
+  data: [
+    { banners: BannerType[] },
+    { recommendedProducts: PaginatedProductsType[] },
+    { discountedProducts: PaginatedProductsType[] },
+    { products: PaginatedProductsType[] }
+  ];
 }
 
-const URL = "/products";
-
-const Home = ({ fallbackData }: Props) => {
+const Home = ({
+  data,
+}: InferGetServerSidePropsType<typeof getServerSideProps>) => {
   const { t } = useTranslation("common");
 
-  // const { data, error } = useSWR(URL, fetcher, { fallbackData });
-
-  // const { site = {}, page = {}, products } = data;
-
-  const { dispatch, state } = useStateContext();
-  const context = React.useContext(StateContext);
-
-  console.log(state, "context");
+  console.log(data, "data1");
+  const [banners, recommendedProducts, discountedProducts, products] = data;
 
   return (
     <>
-      <Layout
-      // site={site}
-      // page={page}
-      // schema={getProductSchema({ query, product, activeVariantID, site })}
-      >
-        {/* <main className={styles.main}>
-          <div className="max-w-5xl	mx-auto flex items-center flex-wrap">
-            {products?.map(({ images, id, name }: ProductType) => (
-              <Link key={id} href={`products/${id}`}>
+      <Layout>
+        <Banners banners={banners?.banners} />
+
+        <div className="max-w-6xl mx-auto">
+          <ProductList
+            title={"推薦商品"}
+            // @ts-ignore
+
+            products={recommendedProducts?.products}
+          />
+          <ProductList
+            title={"限時優惠"}
+            // @ts-ignore
+
+            products={discountedProducts?.products}
+          />
+          <ProductList
+            title={
+              <div className="w-full sticky self-start top-0   flex items-center  border border-primary text-primary py-2 rounded-tr-xl rounded-bl-xl justify-center space-x-1">
                 <Image
-                  className="w-[200px] h-[200px] object-cover"
-                  width={200}
-                  height={200}
-                  src={images[0]}
-                  alt={name}
+                  width={100}
+                  height={50}
+                  src="/O.HI.O-logo.svg"
+                  alt="logo"
                 />
-              </Link>
-            ))}
-            <p>{t("welcome")}</p>
-          </div>
-        </main> */}
-        <div
-          onClick={() => {
-            // dispatch({
-            //   type: "SET_LOGIN",
-            //   payload: {
-            //     name: "danie",
-            //     picture: "",
-            //     birthday: "s",
-            //     gender: "",
-            //   },
-            // });
-            // setTheme("dark");
-          }}
-        >
-          {" "}
-          {/* {theme} */}
+                <h2 className="font-500 text-2xl">隨便逛逛</h2>
+              </div>
+            }
+            // @ts-ignore
+            products={products?.products}
+            showMore={false}
+            direction="col"
+          />
         </div>
       </Layout>
     </>
@@ -91,10 +80,34 @@ const Home = ({ fallbackData }: Props) => {
 export const getServerSideProps: GetServerSideProps<Props> = async ({
   locale,
 }) => {
-  const data = await fetcher(URL);
+  function handleResults<T>(results: T | []) {
+    const errors = results
+      // @ts-ignore
+      .filter((result) => result.status === "rejected")
+      // @ts-ignore
+      .map((result) => result.reason);
+
+    if (errors.length) {
+      // Aggregate all errors into one
+      throw new AggregateError(errors);
+    }
+    // @ts-ignore
+
+    return results.map((result) => result.value?.data);
+  }
+
+  const results = await Promise.allSettled([
+    getBannersAPI(),
+    getRecommendedProductsAPI(),
+    getDiscountedProductsAPI(),
+    getProductsAPI(),
+  ]);
+
+  const data = handleResults<typeof results>(results);
+
   return {
     props: {
-      fallbackData: data,
+      data,
       ...(await serverSideTranslations(locale ?? "en-US", [
         "common",
         "footer",

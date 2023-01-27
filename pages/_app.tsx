@@ -8,12 +8,14 @@ import { QueryClient, QueryClientProvider } from "react-query";
 import { appWithTranslation } from "next-i18next";
 
 import Cookies from "@/lib/cookies";
+import { store } from "../redux/store";
+import { Provider } from "react-redux";
+import Sidebar from "@/components/sidebar";
+import Header from "@/components/header";
+import Footer from "@/components/footer";
 import { pageview } from "@/lib/gtag";
-import { StateContextProvider, useStateContext } from "../context";
 
 const ValidateAuth = () => {
-  const { dispatch, state } = useStateContext();
-
   // useEffect(async () => {
   //   const accessToken: string = Cookies.get("accessToken") || "";
   //   const refreshToken: string = Cookies.get("refreshToken") || "";
@@ -26,6 +28,25 @@ const ValidateAuth = () => {
   //   }
   // }, [dispatch]);
   return null;
+};
+
+// @ts-ignore
+const Site = ({ Component, pageProps }) => {
+  const { data } = pageProps;
+
+  useEffect(() => {
+    // if no site info , populate site info
+    // setContext;
+  }, []);
+
+  return (
+    <>
+      <Header />
+      <Component {...pageProps} />
+      <Footer />
+      <Sidebar />
+    </>
+  );
 };
 
 const App = ({ Component, pageProps }: AppProps) => {
@@ -68,12 +89,12 @@ const App = ({ Component, pageProps }: AppProps) => {
         `}
       </Script>
 
-      <QueryClientProvider client={queryClient}>
-        <StateContextProvider>
-          <Component {...pageProps} />
+      <Provider store={store}>
+        <QueryClientProvider client={queryClient}>
+          <Site Component={Component} pageProps={pageProps} />
           <ValidateAuth />
-        </StateContextProvider>
-      </QueryClientProvider>
+        </QueryClientProvider>
+      </Provider>
     </>
   );
 };
