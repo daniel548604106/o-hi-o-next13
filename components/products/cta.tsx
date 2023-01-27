@@ -5,7 +5,8 @@ import { useAppDispatch, useAppSelector } from "@/redux/hooks";
 import { useRouter } from "next/router";
 
 interface ButtonProps {
-  Icon: React.Element;
+  // @ts-ignore
+  Icon: React.JsxElement;
   title: string;
   bgColor?: string;
   textColor?: string;
