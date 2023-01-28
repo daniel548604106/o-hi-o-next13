@@ -24,6 +24,7 @@
       "@/interfaces": ["types/interfaces"],
       "@/pages/*": ["pages/*"],
       "@/redux/*": ["redux/*"],
+      "@/hooks/*": ["hooks/*"],
       "@/utils/*": ["utils/*"]
     }
   },

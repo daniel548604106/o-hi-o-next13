@@ -2,8 +2,14 @@
 @tailwind components;
 @tailwind utilities;
 
-:root {
-  --swiper-navigation-color: #fff;
+@layer base {
+  :root {
+    --header-height-desktop: 80px;
+    --header-height-mobile: 60px;
+    --swiper-navigation-color: #fff;
+
+    /* ... */
+  }
 }
 
 .swiper-button-prev:after,

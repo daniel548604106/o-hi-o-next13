@@ -6,6 +6,14 @@ module.exports = {
   ],
   theme: {
     extend: {
+      margin: {
+        "header-height-desktop": "var(--header-height-desktop)",
+        "header-height-mobile": "var(--header-height-mobile)",
+      },
+      height: {
+        "header-height-desktop": "var(--header-height-desktop)",
+        "header-height-mobile": "var(--header-height-mobile)",
+      },
       colors: {
         primary: "#EB5756",
         white: "#FFFFFF",

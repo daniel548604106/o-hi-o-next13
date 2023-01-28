@@ -43,7 +43,9 @@ const Site = ({ Component, pageProps }) => {
   return (
     <>
       <Header />
-      <Component {...pageProps} />
+      <div className="mt-header-height-mobile sm:mt-header-height-desktop">
+        <Component {...pageProps} />
+      </div>
       <Footer />
       <Sidebar />
     </>
