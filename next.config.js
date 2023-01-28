@@ -41,10 +41,11 @@ const nextConfig = {
 
 const prod = process.env.NODE_ENV === "production";
 
-const withPWA = require("next-pwa")({
-  // Do not recreate in dev mode
-  disable: prod ? false : true,
-  dest: "public",
-});
+// const withPWA = require("next-pwa")({
+//   // Do not recreate in dev mode
+//   disable: prod ? false : true,
+//   dest: "public",
+// });
 
-module.exports = withPWA(nextConfig);
+// module.exports = withPWA(nextConfig);
+module.exports = nextConfig;
