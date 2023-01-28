@@ -31,7 +31,7 @@ const SearchInput = ({ className }: SearchInputProps) => {
     <div
       className={`${
         className || ""
-      } flex items-center p-1 px-4 sm:px-2 transition-all duration-500 rounded-full bg-gray-100`}
+      } flex items-center active:w-full focus-within:w-full p-1 px-4 sm:px-2 transition-all duration-500 rounded-full bg-gray-100`}
     >
       <MagnifyingGlassIcon className="text-gray-600 h-5" />
       <input
@@ -42,6 +42,7 @@ const SearchInput = ({ className }: SearchInputProps) => {
     </div>
   );
 };
+
 const Header = () => {
   const router = useRouter();
 
@@ -69,7 +70,7 @@ const Header = () => {
             isScrollHeightExceedTarget
               ? "-translate-y-[64px] space-y-2"
               : " -translate-y-1/4"
-          } flex items-center w-full flex-col sm:flex-row top-1/2 absolute transition-all duration-500 left-1/2 transform -translate-x-1/2 sm:relative sm:translate-x-0 sm:translate-y-0 sm:top-auto sm:left-auto`}
+          } flex items-center flex-col sm:flex-row top-1/2 absolute transition-all duration-500 left-1/2 transform -translate-x-1/2 sm:relative sm:translate-x-0 sm:translate-y-0 sm:top-auto sm:left-auto`}
         >
           <Link href="/">
             <Image
@@ -85,7 +86,7 @@ const Header = () => {
           <SearchInput
             className={`${
               isScrollHeightExceedTarget ? "w-1/2" : "w-full"
-            } sm:hidden`}
+            } shadow-md sm:hidden`}
           />
         </div>
 
