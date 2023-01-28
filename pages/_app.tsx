@@ -13,6 +13,7 @@ import { Provider } from "react-redux";
 import Sidebar from "@/components/sidebar";
 import Header from "@/components/header";
 import Footer from "@/components/footer";
+import ErrorBoundary from "@/components/error-boundary";
 import { pageview } from "@/lib/gtag";
 
 const ValidateAuth = () => {
@@ -91,8 +92,10 @@ const App = ({ Component, pageProps }: AppProps) => {
 
       <Provider store={store}>
         <QueryClientProvider client={queryClient}>
-          <Site Component={Component} pageProps={pageProps} />
-          <ValidateAuth />
+          <ErrorBoundary>
+            <Site Component={Component} pageProps={pageProps} />
+            <ValidateAuth />
+          </ErrorBoundary>
         </QueryClientProvider>
       </Provider>
     </>
