@@ -86,7 +86,7 @@ export const getServerSideProps: GetServerSideProps<Props> = async ({
   function handleResults<T>(results: T | []) {
     const errors = results
       // @ts-ignore
-      .filter((result) => result.status === "rejected")
+      .filter((result) => result?.status === "rejected")
       // @ts-ignore
       .map((result) => result.reason);
 
@@ -96,7 +96,7 @@ export const getServerSideProps: GetServerSideProps<Props> = async ({
     }
     // @ts-ignore
 
-    return results.map((result) => result.value?.data);
+    return results.map((result) => result?.value?.data);
   }
 
   const results = await Promise.allSettled([
