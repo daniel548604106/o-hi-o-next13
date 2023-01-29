@@ -52,25 +52,27 @@ const Header = () => {
   const dispatch = useAppDispatch();
 
   const scrollPosition = useScrollPosition();
+  console.log(router, "router");
+  const isShowSearchInput = ["/", "/explore"].includes(router.pathname);
   const isScrollHeightExceedTarget = scrollPosition > HIDE_LOGO_SCROLL_POSTIION;
-
-  const SideBarIcon = isSidebarOpen ? XMarkIcon : Bars2Icon;
 
   return (
     <header className="border-b p-3 sm:p-4 fixed top-0 left-0 right-0 z-50 bg-white h-header-height-mobile sm:h-header-height-desktop">
       <div className="max-w-6xl mx-auto flex items-center justify-between relative h-full">
-        <SideBarIcon
+        <Bars2Icon
           onClick={() => dispatch(toggleSidebarOpen())}
-          className={`${
-            isSidebarOpen ? "fixed top-6 right-4 z-50 opacity-1" : ""
-          } transform transition-all duration-500 min-w-10px text-gray-700 cursor-pointer inline-block sm:hidden h-5 `}
+          className={` transform transition-all duration-500 min-w-10px text-gray-700 cursor-pointer inline-block sm:hidden h-5 `}
         />
         <div
-          className={`${
-            isScrollHeightExceedTarget
-              ? "-translate-y-[64px] space-y-2"
-              : " -translate-y-1/4"
-          } flex items-center flex-col sm:flex-row top-1/2 absolute transition-all duration-500 left-1/2 transform -translate-x-1/2 sm:relative sm:translate-x-0 sm:translate-y-0 sm:top-auto sm:left-auto`}
+          className={` ${
+            isShowSearchInput
+              ? `${
+                  isScrollHeightExceedTarget
+                    ? "-translate-y-[64px] space-y-2"
+                    : " -translate-y-1/4"
+                }`
+              : "-translate-y-1/2"
+          } flex items-center w-full flex-col sm:flex-row top-1/2 absolute transition-all duration-500 left-1/2 transform -translate-x-1/2 sm:relative sm:translate-x-0 sm:translate-y-0 sm:top-auto sm:left-auto`}
         >
           <Link href="/">
             <Image
@@ -86,7 +88,7 @@ const Header = () => {
           <SearchInput
             className={`${
               isScrollHeightExceedTarget ? "w-1/2" : "w-full"
-            } shadow-md sm:hidden`}
+            } shadow-md ${isShowSearchInput ? "" : "hidden"} sm:hidden`}
           />
         </div>
 

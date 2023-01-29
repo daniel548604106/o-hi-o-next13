@@ -21,6 +21,7 @@ const nextConfig = {
       "cdn03.pinkoi.com",
       "64.media.tumblr.com",
       "craftbagth.com",
+      "res.cloudinary.com",
       "img.meepstage.com",
       "*",
     ],

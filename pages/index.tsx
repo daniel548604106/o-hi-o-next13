@@ -31,10 +31,13 @@ interface Props {
 const Home = ({
   data,
 }: InferGetServerSidePropsType<typeof getServerSideProps>) => {
-  const { t } = useTranslation("common");
+  // const { t } = useTranslation("common");
 
   console.log(data, "data1");
+
   const [banners, recommendedProducts, discountedProducts, products] = data;
+
+  if (!data) return <div>...loading</div>;
 
   return (
     <>
