@@ -31,10 +31,13 @@ interface Props {
 const Home = ({
   data,
 }: InferGetServerSidePropsType<typeof getServerSideProps>) => {
-  const { t } = useTranslation("common");
+  // const { t } = useTranslation("common");
 
   console.log(data, "data1");
+
   const [banners, recommendedProducts, discountedProducts, products] = data;
+
+  if (!data) return <div>...loading</div>;
 
   return (
     <>
@@ -83,7 +86,7 @@ export const getServerSideProps: GetServerSideProps<Props> = async ({
   function handleResults<T>(results: T | []) {
     const errors = results
       // @ts-ignore
-      .filter((result) => result.status === "rejected")
+      .filter((result) => result?.status === "rejected")
       // @ts-ignore
       .map((result) => result.reason);
 
@@ -93,7 +96,7 @@ export const getServerSideProps: GetServerSideProps<Props> = async ({
     }
     // @ts-ignore
 
-    return results.map((result) => result.value?.data);
+    return results.map((result) => result?.value?.data);
   }
 
   const results = await Promise.allSettled([
